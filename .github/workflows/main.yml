@@ -23,7 +23,7 @@ jobs:
         run: |
           $diff = git diff --name-only HEAD^ HEAD
 
-          $SourceDiff = $diff | Where-Object { $_ -match 'src/second' }
+          $SourceDiff = $diff | Where-Object { $_ -match 'src/' }
           $HasDiff = $SourceDiff.Length -gt 0
 
           Write-Host "::set-output name=modified::$HasDiff"
