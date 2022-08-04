@@ -29,7 +29,8 @@ jobs:
           Write-Host "::set-output name=modified::$HasDiff"
 
   build-and-deploy:
-    if: ${{ steps.check-diff.outputs.modified == 'True' }}
+    needs: check-diff
+    if: ${{ needs.check-diff.outputs.modified == 'True' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
