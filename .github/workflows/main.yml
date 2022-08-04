@@ -1,11 +1,35 @@
-name: ""
-
 on:
   push:
     branches: [master]
 
 jobs:
+  check-diff:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    outputs:
+      modified: ${{ steps.check.outputs.modified }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - id: check
+        name: Check if src/ is modified
+        shell: pwsh
+        run: |
+          $diff = git diff --name-only HEAD^ HEAD
+
+          $SourceDiff = $diff | Where-Object { $_ -match 'src/second' }
+          $HasDiff = $SourceDiff.Length -gt 0
+
+          Write-Host "::set-output name=modified::$HasDiff"
+
   build-and-deploy:
+    if: ${{ steps.check-diff.outputs.modified == 'True' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
