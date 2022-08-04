@@ -4,7 +4,7 @@ import hello2 from './hello2'
 type Routes = { [key: string]: HttpFunction }
 
 const ROUTES: Routes = {
-  hello: (_, res) => res.status(200).send('Hello, World!'),
+  hello: (_, res) => res.status(200).send('Hello, World!!!!'),
   hello2, 
 }
 
