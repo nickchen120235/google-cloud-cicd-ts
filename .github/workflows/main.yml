@@ -52,13 +52,13 @@ jobs:
     - name: "Build"
       run: npm run build
 
-    - name: "Setup Google Cloud SDK"
-      uses: google-github-actions/setup-gcloud@v0
-
     - name: Authenticate with Google Cloud
       uses: google-github-actions/auth@v0
       with:
         credentials_json: ${{ secrets.GCP_SA_JSON }}
+
+    - name: "Setup Google Cloud SDK"
+      uses: google-github-actions/setup-gcloud@v0
 
     - name: "Deploy to Google Cloud Functions"
       uses: google-github-actions/deploy-cloud-functions@v0
